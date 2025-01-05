@@ -31,3 +31,19 @@ func CreateUser(C *fiber.Ctx) error {
 		"user":    user,
 	})
 }
+
+func GetAllUser(C *fiber.Ctx) error {
+	var users []model.User
+	if err:= database.DB.Find(&users).Error; err != nil{
+		return C.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message":"Failed to get all user",
+			"status":500,
+		})
+	}
+
+	return C.Status(fiber.StatusOK).JSON(fiber.Map{
+		"message":"Success Get All user",
+		"status":200,
+		"data":users,
+	})
+}

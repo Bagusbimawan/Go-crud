@@ -30,3 +30,20 @@ func CreateProduct(c *fiber.Ctx)error{
 		"data": Products,
 	})
 }
+
+func GetAllProduct(C *fiber.Ctx)error{
+	var products []model.Product
+
+	if err := database.DB.Find(&products).Error ; err != nil {
+		return C.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": "Failed to get all product",
+			"status": 500,
+		})
+	}
+
+	return C.Status(fiber.StatusOK).JSON(fiber.Map{
+		"message":"Product get Success",
+		"status":200,
+		"data": products,
+	})
+}
